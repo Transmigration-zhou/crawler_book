@@ -14,9 +14,10 @@ var (
 	priceRe     = regexp.MustCompile(`<span class="pl">定价:</span> ([^<]+)<br/>`)
 	scoreRe     = regexp.MustCompile(`<strong class="ll rating_num " property="v:average"> ([^<]+) </strong>`)
 	introRe     = regexp.MustCompile(`<div class="intro">[\d\D]*?<p>([^<]+)</p></div>`)
+	idUrlRe     = regexp.MustCompile(`https://book.douban.com/subject/([0-9]+)/`)
 )
 
-func ParseBookDetail(contents []byte, name string) engine.ParseResult {
+func ParseBookDetail(contents []byte, name string, url string) engine.ParseResult {
 	book := model.Book{}
 	book.Name = name
 	book.Author = extractContent(contents, authorRe)
@@ -31,7 +32,14 @@ func ParseBookDetail(contents []byte, name string) engine.ParseResult {
 	book.Intro = extractContent(contents, introRe)
 
 	result := engine.ParseResult{
-		Items: []interface{}{book},
+		Items: []engine.Item{
+			{
+				Url:     url,
+				Type:    "douban",
+				Id:      extractContent([]byte(url), idUrlRe),
+				Payload: book,
+			},
+		},
 	}
 	return result
 }

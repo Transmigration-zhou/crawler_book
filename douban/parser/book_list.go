@@ -15,11 +15,10 @@ func ParseBookList(contents []byte) engine.ParseResult {
 		url := string(m[1])
 		name := string(m[2])
 		//fmt.Printf("book: %s, url: %s \n", m[2], m[1])
-		result.Items = append(result.Items, name)
 		result.Requests = append(result.Requests, engine.Request{
 			Url: url,
 			ParserFunc: func(content []byte) engine.ParseResult {
-				return ParseBookDetail(content, name)
+				return ParseBookDetail(content, name, url)
 			},
 		})
 	}
