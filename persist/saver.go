@@ -45,7 +45,6 @@ func save(client *elasticsearch.Client, index string, item engine.Item) error {
 		DocumentType: item.Type,
 		Body:         bytes.NewReader(data),
 	}
-	fmt.Println(bytes.NewReader(data))
 	if item.Id != "" {
 		indexService.DocumentID = item.Id
 	}
