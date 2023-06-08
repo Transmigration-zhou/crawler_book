@@ -2,25 +2,20 @@ package client
 
 import (
 	"crawler_book/distributed/config"
-	"crawler_book/distributed/rpcsupport"
 	"crawler_book/distributed/worker"
 	"crawler_book/engine"
-	"fmt"
+	"net/rpc"
 )
 
-func CreateProcessor() (engine.Processor, error) {
-	client, err := rpcsupport.NewClient(fmt.Sprintf(":%d", config.WorkerPort0))
-	if err != nil {
-		return nil, err
-	}
+func CreateProcessor(clientChan chan *rpc.Client) engine.Processor {
 	return func(req engine.Request) (engine.ParseResult, error) {
 		sReq := worker.SerializeRequest(req)
 		var sResult worker.ParseResult
+		client := <-clientChan
 		err := client.Call(config.CrawlServiceRpc, sReq, &sResult)
 		if err != nil {
 			return engine.ParseResult{}, err
 		}
 		return worker.DeserializeResult(sResult), nil
-	}, nil
-
+	}
 }
