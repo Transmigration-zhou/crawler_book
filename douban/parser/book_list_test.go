@@ -10,7 +10,7 @@ func TestParseBookList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	result := ParseBookList(contents)
+	result := ParseBookList(contents, "")
 
 	const resultSize = 14
 	expectedUrls := []string{

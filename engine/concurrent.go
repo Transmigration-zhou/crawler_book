@@ -1,10 +1,13 @@
 package engine
 
 type ConcurrentEngine struct {
-	Scheduler Scheduler
-	WorkCount int
-	ItemChan  chan Item
+	Scheduler        Scheduler
+	WorkCount        int
+	ItemChan         chan Item
+	RequestProcessor Processor
 }
+
+type Processor func(Request) (ParseResult, error)
 
 type Scheduler interface {
 	ReadyNotifier
@@ -48,7 +51,7 @@ func (e *ConcurrentEngine) createWorker(in chan Request, out chan ParseResult, r
 		for {
 			ready.WorkerReady(in)
 			request := <-in
-			result, err := worker(request)
+			result, err := e.RequestProcessor(request)
 			if err != nil {
 				continue
 			}

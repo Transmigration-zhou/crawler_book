@@ -10,7 +10,7 @@ func TestParseCityList(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	result := ParseTagList(contents)
+	result := ParseTagList(contents, "")
 
 	const resultSize = 47
 	expectedUrls := []string{
