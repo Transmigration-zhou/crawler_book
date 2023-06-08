@@ -10,6 +10,8 @@ const (
 
 	ItemSaverRpc    = "ItemSaverService.Save"
 	CrawlServiceRpc = "CrawlService.Process"
-	ItemSaverPort   = 1234
-	WorkerPort0     = 9000
+
+	ItemSaverPort = 1234
+
+	Qps = 20
 )

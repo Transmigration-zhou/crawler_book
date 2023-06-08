@@ -1,13 +1,14 @@
 package fetcher
 
 import (
+	"crawler_book/distributed/config"
 	"fmt"
 	"io"
 	"net/http"
 	"time"
 )
 
-var rateLimiter = time.Tick(1000 * time.Millisecond)
+var rateLimiter = time.Tick(time.Second / config.Qps)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
