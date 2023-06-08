@@ -4,7 +4,7 @@ golang爬虫（豆瓣读书）
 ## Branches
 - Branch [simple](https://github.com/Transmigration-zhou/crawler_book/tree/simple) 对应单任务爬虫
 - Branch [concurrent](https://github.com/Transmigration-zhou/crawler_book/tree/concurrent) 对应并发版爬虫
-- 分布式爬虫正在开发中
+- Branch [distributed](https://github.com/Transmigration-zhou/crawler_book/tree/distributed) 对应分布式爬虫
 
 ## P.S.
 1. 使用Elasticsearch进行数据存储（simple分支除外）
